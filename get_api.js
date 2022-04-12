@@ -1,7 +1,6 @@
 const express = require('express');
 const dbConnect = require('./mongodb');
 const mongo = require('mongodb');
-
 const app = express();
 app.use(express.json());
 
@@ -12,7 +11,12 @@ app.get('/',async (req,resp)=>{
     resp.send(data);
 });
 
-app.post('/',async (req,resp)=>{
+// app.post('/', (req, res)=>{
+//     console.log(JSON.stringify(req.body));
+//     // res.send(req.body.name);
+//   });
+
+app.post('/', async (req,resp)=>{
     let data = await dbConnect();
     // console.log(req.body);
     // resp.send({name: 'post'});
@@ -25,10 +29,12 @@ app.post('/',async (req,resp)=>{
     //     "dateOfJoining":"2022-01-03",
     //     "gender":"male"
     //  }
-    console.log(req.body);
+    console.log(JSON.stringify(req.body));
+
+    // console.log(req.body);
     let result = await data.insertOne(req.body);
     // resp.send(req.body);
-    resp.send("Data inserted."); 
+    resp.send(JSON.stringify("Data inserted.")); 
 });
 
 //static data
@@ -80,6 +86,6 @@ app.delete('/:id',async (req,resp)=>{
     }
 });
 
-app.listen(5000)
+app.listen(5000);
 
 
